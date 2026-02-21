@@ -1,0 +1,85 @@
+stages:
+  collect:
+    cmd: calkit xenv -n main --no-check -- python scripts/collect.py
+    deps:
+      - scripts/collect.py
+      - uv.lock
+    outs:
+      - data/raw.csv:
+          cache: false
+          persist: false
+    desc: Automatically generated from the 'collect' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  process:
+    cmd: calkit xenv -n julia1 --no-check -- "scripts/process.jl"
+    deps:
+      - scripts/process.jl
+      - data/raw.csv
+      - Manifest.toml
+    outs:
+      - data/processed.csv:
+          cache: false
+          persist: false
+    desc: Automatically generated from the 'process' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  plot:
+    cmd: calkit xenv -n renv1 -- Rscript scripts/plot.R
+    deps:
+      - scripts/plot.R
+      - data/raw.csv
+      - data/processed.csv
+      - renv.lock
+    outs:
+      - paper/figures/raw_timeseries.png:
+          cache: true
+          persist: false
+      - paper/figures/processed_timeseries.png:
+          cache: true
+          persist: false
+      - paper/figures/raw_distributions.png:
+          cache: true
+          persist: false
+      - paper/figures/processed_smooth.png:
+          cache: true
+          persist: false
+      - paper/figures/processed_derivative.png:
+          cache: true
+          persist: false
+    desc: Automatically generated from the 'plot' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  plot-more:
+    cmd: matlab -batch "run('scripts/plot_more.m');"
+    deps:
+      - scripts/plot_more.m
+      - data/raw.csv
+    outs:
+      - paper/figures/raw_correlation.png:
+          cache: true
+          persist: false
+      - paper/figures/raw_scatter3d.png:
+          cache: true
+          persist: false
+      - paper/figures/raw_spectrogram.png:
+          cache: true
+          persist: false
+    desc: Automatically generated from the 'plot-more' stage in calkit.yaml.
+      Changes made here will be overwritten.
+  main:
+    cmd: calkit latex build -e latex --no-check paper/main.tex
+    deps:
+      - paper/main.tex
+      - paper/figures/raw_timeseries.png
+      - paper/figures/raw_distributions.png
+      - paper/figures/raw_correlation.png
+      - paper/figures/raw_scatter3d.png
+      - paper/figures/raw_spectrogram.png
+      - paper/figures/processed_timeseries.png
+      - paper/figures/processed_smooth.png
+      - paper/figures/processed_derivative.png
+      - paper/references.bib
+      - .calkit/env-locks/latex
+    outs:
+      - paper/main.pdf:
+          cache: false
+    desc: Automatically generated from the 'main' stage in calkit.yaml.
+      Changes made here will be overwritten.
