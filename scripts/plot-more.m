@@ -1,7 +1,7 @@
 % Additional MATLAB plots that are convenient with built-in functions.
 
-raw_path = fullfile('data', 'raw.csv');
-fig_dir = fullfile('paper', 'figures');
+raw_path = 'data/raw.csv';
+fig_dir = 'paper/figures';
 if ~exist(fig_dir, 'dir')
 	mkdir(fig_dir);
 end
@@ -46,14 +46,14 @@ set(gca, 'XTick', 1:numel(num_names), 'XTickLabel', num_names, ...
 	'YTick', 1:numel(num_names), 'YTickLabel', num_names, ...
 	'XTickLabelRotation', 45);
 title('Raw data correlation');
-saveas(fig, fullfile(fig_dir, 'raw_correlation.png'));
+saveas(fig, 'paper/figures/raw_correlation.png');
 
 % Parallel coordinates of standardized values.
 fig = figure('Color', 'w');
 standard = (data - mean(data, 1)) ./ std(data, 0, 1);
 parallelcoords(standard, 'Labels', num_names);
 title('Parallel coordinates (standardized)');
-saveas(fig, fullfile(fig_dir, 'raw_parallelcoords.png'));
+saveas(fig, 'paper/figures/raw_parallelcoords.png');
 
 % 3D scatter using first three numeric columns.
 if size(data, 2) >= 3
@@ -65,7 +65,7 @@ if size(data, 2) >= 3
 	title('3D scatter colored by time');
 	grid on;
 	colorbar;
-	saveas(fig, fullfile(fig_dir, 'raw_scatter3d.png'));
+	saveas(fig, 'paper/figures/raw_scatter3d.png');
 end
 
 % Spectrogram of the first numeric series.
@@ -78,5 +78,5 @@ if numel(t) >= 64
 	end
 	spectrogram(x, 64, 48, 128, fs, 'yaxis');
 	title(['Spectrogram: ', num_names{1}]);
-	saveas(fig, fullfile(fig_dir, 'raw_spectrogram.png'));
+	saveas(fig, 'paper/figures/raw_spectrogram.png');
 end
