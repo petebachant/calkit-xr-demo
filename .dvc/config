@@ -1,0 +1,6 @@
+[core]
+    autostage = true
+    remote = calkit
+['remote "calkit"']
+    url = https://api.calkit.io/projects/petebachant/calkit-xr-demo/dvc
+    auth = custom
