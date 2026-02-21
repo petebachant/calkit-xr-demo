@@ -4,8 +4,8 @@ using CSV
 using DataFrames
 using Statistics
 
-const DEFAULT_INPUT = "data/raw.csv"
-const DEFAULT_OUTPUT = "data/processed.csv"
+const INPUT_PATH = "data/raw.csv"
+const OUTPUT_PATH = "data/processed.csv"
 const DEFAULT_WINDOW = 5
 
 function detect_time_column(df::DataFrame)
@@ -47,8 +47,8 @@ function time_derivative(x::Vector{T}, t::Vector{T}) where {T<:Real}
 	return out
 end
 
-function process(input_path::String, output_path::String; window::Int = DEFAULT_WINDOW)
-	df = CSV.read(input_path, DataFrame)
+function process(; window::Int = DEFAULT_WINDOW)
+	df = CSV.read(INPUT_PATH, DataFrame)
 	df = dropmissing(df)
 
 	time_col = detect_time_column(df)
@@ -68,15 +68,7 @@ function process(input_path::String, output_path::String; window::Int = DEFAULT_
 		df[!, Symbol(name, "_dt")] = time_derivative(x, t)
 	end
 
-	CSV.write(output_path, df)
+	CSV.write(OUTPUT_PATH, df)
 end
 
-function main(args)
-	input_path = length(args) >= 1 ? args[1] : DEFAULT_INPUT
-	output_path = length(args) >= 2 ? args[2] : DEFAULT_OUTPUT
-	process(input_path, output_path)
-end
-
-if abspath(PROGRAM_FILE) == @__FILE__
-	main(ARGS)
-end
+process()
