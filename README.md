@@ -1,4 +1,4 @@
-# Calkit xr demo
+# Calkit `xr` demo
 
-
-A demo project showing how to automatically automate scientific workflows.
+A demo project showing how to _automatically automate_ scientific workflows
+using the Calkit `xr` (execute-and-record) command.
