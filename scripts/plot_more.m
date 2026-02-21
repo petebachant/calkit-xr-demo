@@ -1,7 +1,7 @@
 % Additional MATLAB plots that are convenient with built-in functions.
 
-raw_path = 'data/raw.csv';
-fig_dir = 'paper/figures';
+raw_path = '../data/raw.csv';
+fig_dir = '../paper/figures';
 if ~exist(fig_dir, 'dir')
 	mkdir(fig_dir);
 end
@@ -36,8 +36,9 @@ end
 data = table2array(num_tbl);
 
 % Correlation heatmap.
-fig = figure('Color', 'w');
-corr_mat = corr(data, 'Rows', 'complete');
+fig = figure('Color', 'white');
+% Compute correlation using corrcoef (no toolbox required)
+corr_mat = corrcoef(data);
 imagesc(corr_mat);
 axis equal tight;
 colormap(parula);
@@ -46,18 +47,12 @@ set(gca, 'XTick', 1:numel(num_names), 'XTickLabel', num_names, ...
 	'YTick', 1:numel(num_names), 'YTickLabel', num_names, ...
 	'XTickLabelRotation', 45);
 title('Raw data correlation');
-saveas(fig, 'paper/figures/raw_correlation.png');
-
-% Parallel coordinates of standardized values.
-fig = figure('Color', 'w');
-standard = (data - mean(data, 1)) ./ std(data, 0, 1);
-parallelcoords(standard, 'Labels', num_names);
-title('Parallel coordinates (standardized)');
-saveas(fig, 'paper/figures/raw_parallelcoords.png');
+saveas(fig, '../paper/figures/raw_correlation.png');
+close(fig);
 
 % 3D scatter using first three numeric columns.
 if size(data, 2) >= 3
-	fig = figure('Color', 'w');
+	fig = figure('Color', 'white');
 	scatter3(data(:, 1), data(:, 2), data(:, 3), 30, t, 'filled');
 	xlabel(num_names{1});
 	ylabel(num_names{2});
@@ -65,18 +60,29 @@ if size(data, 2) >= 3
 	title('3D scatter colored by time');
 	grid on;
 	colorbar;
-	saveas(fig, 'paper/figures/raw_scatter3d.png');
+	saveas(fig, '../paper/figures/raw_scatter3d.png');
+	close(fig);
 end
 
-% Spectrogram of the first numeric series.
+% Frequency spectrum of the first numeric series.
 if numel(t) >= 64
-	fig = figure('Color', 'w');
+	fig = figure('Color', 'white');
 	x = data(:, 1);
 	fs = 1 / median(diff(t));
 	if ~isfinite(fs) || fs <= 0
 		fs = 1;
 	end
-	spectrogram(x, 64, 48, 128, fs, 'yaxis');
-	title(['Spectrogram: ', num_names{1}]);
-	saveas(fig, 'paper/figures/raw_spectrogram.png');
+	% Compute FFT
+	n = length(x);
+	X = fft(x);
+	freqs = (0:n-1) * fs / n;
+	mag = abs(X) / n;
+	% Plot one-sided spectrum
+	plot(freqs(1:n/2), mag(1:n/2));
+	xlabel('Frequency');
+	ylabel('Magnitude');
+	title(['Frequency spectrum: ', num_names{1}]);
+	grid on;
+	saveas(fig, '../paper/figures/raw_spectrogram.png');
+	close(fig);
 end

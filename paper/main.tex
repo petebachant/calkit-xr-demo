@@ -45,6 +45,7 @@ data, as well as plots for smoothed signals and derivatives when available
 
 \section{Results}
 Figure~\ref{fig:raw} shows raw time-series and distributions.
+Figure~\ref{fig:advanced} shows advanced visualizations.
 Figure~\ref{fig:processed} shows processed time-series, smoothed signals, and
 time derivatives.
 
@@ -63,6 +64,31 @@ time derivatives.
   \end{subfigure}
   \caption{Raw data visualizations.}
   \label{fig:raw}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/raw_correlation.png}
+    \caption{Correlation heatmap.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/raw_scatter3d.png}
+    \caption{3D scatter plot colored by time.}
+  \end{subfigure}
+
+  \vspace{0.5em}
+
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/raw_spectrogram.png}
+    \caption{Frequency spectrum.}
+  \end{subfigure}
+  \caption{Advanced raw data visualizations.}
+  \label{fig:advanced}
 \end{figure}
 
 \begin{figure}[ht]
