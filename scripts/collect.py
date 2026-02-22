@@ -11,7 +11,7 @@ df = pd.DataFrame(
     {
         "x": np.random.rand(n),
         "y": np.random.rand(n),
-        "z": np.random.rand(n),
+        "z": np.random.randn(n),
     }
 )
 
