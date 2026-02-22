@@ -5,11 +5,13 @@ import pandas as pd
 
 np.random.seed(622)
 
+n = 100
+
 df = pd.DataFrame(
     {
-        "x": np.random.rand(100),
-        "y": np.random.rand(100),
-        "z": np.random.rand(100),
+        "x": np.random.rand(n),
+        "y": np.random.rand(n),
+        "z": np.random.rand(n),
     }
 )
 
