@@ -45,7 +45,7 @@ colormap(parula);
 colorbar;
 set(gca, 'XTick', 1:numel(num_names), 'XTickLabel', num_names, ...
 	'YTick', 1:numel(num_names), 'YTickLabel', num_names, ...
-	'XTickLabelRotation', 45);
+	'XTickLabelRotation', 45, 'Color', 'white');
 title('Raw data correlation');
 saveas(fig, '../paper/figures/raw_correlation.png');
 close(fig);
@@ -59,6 +59,7 @@ if size(data, 2) >= 3
 	zlabel(num_names{3});
 	title('3D scatter colored by time');
 	grid on;
+	set(gca, 'Color', 'white');
 	colorbar;
 	saveas(fig, '../paper/figures/raw_scatter3d.png');
 	close(fig);
@@ -82,6 +83,7 @@ if numel(t) >= 64
 	xlabel('Frequency');
 	ylabel('Magnitude');
 	title(['Frequency spectrum: ', num_names{1}]);
+	set(gca, 'Color', 'white');
 	grid on;
 	saveas(fig, '../paper/figures/raw_spectrogram.png');
 	close(fig);
