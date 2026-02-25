@@ -4,3 +4,106 @@ title: Calkit xr demo
 description: A demo project showing how to automatically automate scientific
   workflows.
 git_repo_url: https://github.com/petebachant/calkit-xr-demo
+environments:
+  main:
+    kind: uv
+    path: pyproject.toml
+  julia1:
+    kind: julia
+    path: Project.toml
+    julia: '1.12'
+  renv1:
+    kind: renv
+    path: DESCRIPTION
+  py:
+    kind: uv
+    path: .calkit/envs/py/pyproject.toml
+  latex:
+    kind: docker
+    image: texlive/texlive:latest-full
+pipeline:
+  stages:
+    collect:
+      kind: python-script
+      script_path: scripts/collect.py
+      environment: main
+      outputs:
+        - path: data/raw.csv
+          storage: git
+    process:
+      kind: julia-script
+      script_path: scripts/process.jl
+      environment: julia1
+      inputs:
+        - data/raw.csv
+      outputs:
+        - path: data/processed.csv
+          storage: git
+    plot:
+      kind: r-script
+      script_path: scripts/plot.R
+      environment: renv1
+      inputs:
+        - data/raw.csv
+        - data/processed.csv
+      outputs:
+        - path: paper/figures/raw_timeseries.png
+          storage: dvc
+        - path: paper/figures/processed_timeseries.png
+          storage: dvc
+        - path: paper/figures/raw_distributions.png
+          storage: dvc
+        - path: paper/figures/processed_smooth.png
+          storage: dvc
+        - path: paper/figures/processed_derivative.png
+          storage: dvc
+    plot-more:
+      kind: matlab-script
+      script_path: scripts/plot_more.m
+      environment: _system
+      inputs:
+        - data/raw.csv
+      outputs:
+        - path: paper/figures/raw_correlation.png
+          storage: dvc
+        - path: paper/figures/raw_scatter3d.png
+          storage: dvc
+        - path: paper/figures/raw_spectrogram.png
+          storage: dvc
+    plot-spec-notebook:
+      kind: jupyter-notebook
+      notebook_path: notebooks/plot-spec.ipynb
+      html_storage: git
+      executed_ipynb_storage: git
+      environment: py
+      inputs:
+        - data/raw.csv
+      outputs:
+        - path: paper/figures/raw-data-spectra.png
+          storage: dvc
+    main:
+      kind: latex
+      target_path: paper/main.tex
+      pdf_storage: git
+      environment: latex
+      inputs:
+        - paper/figures/raw_timeseries.png
+        - paper/figures/raw_distributions.png
+        - paper/figures/raw_correlation.png
+        - paper/figures/raw_scatter3d.png
+        - paper/figures/raw_spectrogram.png
+        - paper/figures/raw-data-spectra.png
+        - paper/figures/processed_timeseries.png
+        - paper/figures/processed_smooth.png
+        - paper/figures/processed_derivative.png
+        - paper/references.bib
+publications:
+  - path: paper/main.pdf
+    title: A Simple Workflow for Processing and Visualizing Experimental
+      Data
+    description:
+    kind:
+    stage: main
+overleaf_sync:
+  paper:
+    url: https://www.overleaf.com/project/699f2a0fb20a38960a52bc26
