@@ -29,20 +29,20 @@ stages:
       size: 5816
     - path: scripts/process.jl
       hash: md5
-      md5: 16e92e9ca4b4b0f5920d7320aba1729a
-      size: 1632
+      md5: 0f83d72d96c2c8820126dea7ca4eb46a
+      size: 1633
     outs:
     - path: data/processed.csv
       hash: md5
-      md5: 43dc9494d3b7ccc1dac7c2b5967cd13d
-      size: 17700
+      md5: 59538bcffb7cf4bdcae134bbd460b615
+      size: 17719
   plot:
     cmd: calkit xenv -n renv1 -- Rscript scripts/plot.R
     deps:
     - path: data/processed.csv
       hash: md5
-      md5: 43dc9494d3b7ccc1dac7c2b5967cd13d
-      size: 17700
+      md5: 59538bcffb7cf4bdcae134bbd460b615
+      size: 17719
     - path: data/raw.csv
       hash: md5
       md5: b0927bbde0c8a278b06639193f9a0697
@@ -62,12 +62,12 @@ stages:
       size: 270832
     - path: paper/figures/processed_smooth.png
       hash: md5
-      md5: f2a417095af7441341ab3b4cb1e5e6b9
-      size: 260785
+      md5: da63519402da2b834f75eda115bf40e8
+      size: 236019
     - path: paper/figures/processed_timeseries.png
       hash: md5
-      md5: 72543c9e87386997a814b9c06618974e
-      size: 466706
+      md5: 3a89d4fa7de26eb44f74410a11bd6e8f
+      size: 454464
     - path: paper/figures/raw_distributions.png
       hash: md5
       md5: ab0477b4628ba461d7c8835ef957ddae
@@ -142,12 +142,12 @@ stages:
       size: 270832
     - path: paper/figures/processed_smooth.png
       hash: md5
-      md5: f2a417095af7441341ab3b4cb1e5e6b9
-      size: 260785
+      md5: da63519402da2b834f75eda115bf40e8
+      size: 236019
     - path: paper/figures/processed_timeseries.png
       hash: md5
-      md5: 72543c9e87386997a814b9c06618974e
-      size: 466706
+      md5: 3a89d4fa7de26eb44f74410a11bd6e8f
+      size: 454464
     - path: paper/figures/raw-data-spectra.png
       hash: md5
       md5: 8c9521ad6e0a8c35d00152651b8b4d39
@@ -174,7 +174,7 @@ stages:
       size: 323692
     - path: paper/main.tex
       hash: md5
-      md5: c8866cf0595e512cb1a0ff9e75af505a
+      md5: 7328295754f17b089cff276e49df0da6
       size: 4574
     - path: paper/references.bib
       hash: md5
@@ -183,5 +183,5 @@ stages:
     outs:
     - path: paper/main.pdf
       hash: md5
-      md5: 03038692b6cf1587285a1de7c6e77534
-      size: 1408422
+      md5: 50839fce30ac2d570eb4c907ec11be07
+      size: 1369595
