@@ -2,3 +2,67 @@
 
 A demo project showing how to _automatically automate_ multilingual
 scientific workflows using the Calkit `xr` (execute-and-record) command.
+
+The scripts, notebooks, and paper directories existed beforehand.
+Each was run in the _system_ environment so dependencies were not tracked
+here in the project.
+
+The `calkit xr` command was used to run each process individually:
+
+```sh
+calkit xr scripts/collect.py
+
+calkit xr scripts/process.jl
+
+calkit xr scripts/plot.R
+
+calkit xr scripts/plot_more.m
+
+calkit xr notebooks/plot-spec.ipynb
+
+calkit xr paper/main.tex
+```
+
+This automatically produced a "virtual environment" and pipeline stage for each
+and added them to [`calkit.yaml`](calkit.yaml).
+
+The project then became a directed acyclic graph (DAG),
+allowing everything to be brought up-to-date with a single command, skipping
+steps that don't need to be rerun:
+
+```sh
+calkit run
+```
+
+```mermaid
+flowchart TD
+        node1["collect"]
+        node2["main"]
+        node3["plot"]
+        node4["plot-more"]
+        node5["plot-spec-notebook"]
+        node6["process"]
+        node1-->node3
+        node1-->node4
+        node1-->node5
+        node1-->node6
+        node3-->node2
+        node4-->node2
+        node5-->node2
+        node6-->node3
+```
+
+```console
+$ calkit run
+Getting system information
+Checking system-level dependencies
+Checking environments
+Compiling DVC pipeline
+Stage 'collect' didn't change, skipping
+Stage 'process' didn't change, skipping
+Stage 'plot' didn't change, skipping
+Stage 'plot-more' didn't change, skipping
+Stage 'plot-spec-notebook' didn't change, skipping
+Stage 'main' didn't change, skipping
+Pipeline completed successfully ✅
+```
