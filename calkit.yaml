@@ -82,3 +82,13 @@ pipeline:
         - paper/figures/processed_smooth.png
         - paper/figures/processed_derivative.png
         - paper/references.bib
+publications:
+  - path: paper/main.pdf
+    title: A Simple Workflow for Processing and Visualizing Experimental
+      Data
+    description:
+    kind:
+    stage: main
+overleaf_sync:
+  paper:
+    url: https://www.overleaf.com/project/699bbc5721d0a83c696599bd
