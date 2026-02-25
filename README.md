@@ -64,7 +64,7 @@ flowchart TD
         node6-->node3
 ```
 
-```c
+```
 $ calkit run
 Getting system information
 Checking system-level dependencies
