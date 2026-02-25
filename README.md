@@ -1,34 +1,45 @@
 # Calkit `xr` demo
 
 A demo project showing how to _automatically automate_ multilingual
-scientific workflows using the Calkit `xr` (execute-and-record) command.
+scientific workflows using the `calkit xr` (execute-and-record) command.
 
 The scripts, notebooks, and paper directories existed beforehand.
 Each was run in the _system_ environment so dependencies were not tracked
 here in the project.
 
-The `calkit xr` command was used to run each process individually:
+Each process was then run individually:
 
 ```sh
 calkit xr scripts/collect.py
+```
 
+```sh
 calkit xr scripts/process.jl
+```
 
+```sh
 calkit xr scripts/plot.R
+```
 
+```sh
 calkit xr scripts/plot_more.m
+```
 
+```sh
 calkit xr notebooks/plot-spec.ipynb
+```
 
+```sh
 calkit xr paper/main.tex
 ```
 
-This automatically produced a "virtual environment" and pipeline stage for each
+This automatically recorded a "virtual environment" and pipeline stage for each
 and added them to [`calkit.yaml`](calkit.yaml).
 
 The project then became a directed acyclic graph (DAG),
 allowing everything to be brought up-to-date with a single command, skipping
-steps that don't need to be rerun:
+steps that don't need to be rerun by monitoring changes to their environments,
+input data files, and code:
 
 ```sh
 calkit run
@@ -52,7 +63,7 @@ flowchart TD
         node6-->node3
 ```
 
-```console
+```c
 $ calkit run
 Getting system information
 Checking system-level dependencies
