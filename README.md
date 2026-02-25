@@ -1,7 +1,8 @@
 # Calkit `xr` demo
 
 A demo project showing how to _automatically automate_ multilingual
-scientific workflows using the `calkit xr` (execute-and-record) command.
+scientific workflows using the [`calkit xr`](https://github.com/calkit/calkit)
+(execute-and-record) command.
 
 The scripts, notebooks, and paper directories existed beforehand.
 Each was run in the _system_ environment so dependencies were not tracked
