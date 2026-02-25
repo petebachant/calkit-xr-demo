@@ -1,0 +1,187 @@
+schema: '2.0'
+stages:
+  collect:
+    cmd: calkit xenv -n main --no-check -- python scripts/collect.py
+    deps:
+    - path: scripts/collect.py
+      hash: md5
+      md5: 6d8947e02dde8503f0fa23dd9b52a00c
+      size: 287
+    - path: uv.lock
+      hash: md5
+      md5: 5f29b5045b2689d4d342986acd1aa0dd
+      size: 15260
+    outs:
+    - path: data/raw.csv
+      hash: md5
+      md5: b0927bbde0c8a278b06639193f9a0697
+      size: 5816
+  process:
+    cmd: calkit xenv -n julia1 --no-check -- "scripts/process.jl"
+    deps:
+    - path: Manifest.toml
+      hash: md5
+      md5: 35bb079cf5e77dabf7f19646a3caed35
+      size: 9204
+    - path: data/raw.csv
+      hash: md5
+      md5: b0927bbde0c8a278b06639193f9a0697
+      size: 5816
+    - path: scripts/process.jl
+      hash: md5
+      md5: 16e92e9ca4b4b0f5920d7320aba1729a
+      size: 1632
+    outs:
+    - path: data/processed.csv
+      hash: md5
+      md5: 43dc9494d3b7ccc1dac7c2b5967cd13d
+      size: 17700
+  plot:
+    cmd: calkit xenv -n renv1 -- Rscript scripts/plot.R
+    deps:
+    - path: data/processed.csv
+      hash: md5
+      md5: 43dc9494d3b7ccc1dac7c2b5967cd13d
+      size: 17700
+    - path: data/raw.csv
+      hash: md5
+      md5: b0927bbde0c8a278b06639193f9a0697
+      size: 5816
+    - path: renv.lock
+      hash: md5
+      md5: 8a0a8d0c8ac76191bafafbdcea6fdbcb
+      size: 81555
+    - path: scripts/plot.R
+      hash: md5
+      md5: 39dea3fa42f321ba0321f5d578c4c91c
+      size: 3300
+    outs:
+    - path: paper/figures/processed_derivative.png
+      hash: md5
+      md5: dd1f3f2107b5f9e22741f9843732fd73
+      size: 270832
+    - path: paper/figures/processed_smooth.png
+      hash: md5
+      md5: f2a417095af7441341ab3b4cb1e5e6b9
+      size: 260785
+    - path: paper/figures/processed_timeseries.png
+      hash: md5
+      md5: 72543c9e87386997a814b9c06618974e
+      size: 466706
+    - path: paper/figures/raw_distributions.png
+      hash: md5
+      md5: ab0477b4628ba461d7c8835ef957ddae
+      size: 106820
+    - path: paper/figures/raw_timeseries.png
+      hash: md5
+      md5: ecc74feb1fe59f871f77406db1db336f
+      size: 323692
+  plot-more:
+    cmd: matlab -noFigureWindows -batch "run('scripts/plot_more.m');"
+    deps:
+    - path: data/raw.csv
+      hash: md5
+      md5: b0927bbde0c8a278b06639193f9a0697
+      size: 5816
+    - path: scripts/plot_more.m
+      hash: md5
+      md5: 248c225651ccb3ba6e62c58ad6611641
+      size: 2166
+    outs:
+    - path: paper/figures/raw_correlation.png
+      hash: md5
+      md5: 6361b3053d56e47327253a707606c5f6
+      size: 22849
+    - path: paper/figures/raw_scatter3d.png
+      hash: md5
+      md5: 58e62eb14b3039c70a124a51ee3a9dae
+      size: 51195
+    - path: paper/figures/raw_spectrogram.png
+      hash: md5
+      md5: 0e34015957000d19c0356dfccae34884
+      size: 36871
+  plot-spec-notebook:
+    cmd: calkit nb execute --environment py --no-check --to html "notebooks/plot-spec.ipynb"
+    deps:
+    - path: .calkit/envs/py/uv.lock
+      hash: md5
+      md5: 6ece6a58b1892bc9ce2ee0aa110d8564
+      size: 104128
+    - path: .calkit/notebooks/cleaned/notebooks/plot-spec.ipynb
+      hash: md5
+      md5: c1502a6ad4390275b5a39a023e32f1dc
+      size: 2181
+    - path: data/raw.csv
+      hash: md5
+      md5: b0927bbde0c8a278b06639193f9a0697
+      size: 5816
+    outs:
+    - path: .calkit/notebooks/executed/notebooks/plot-spec.ipynb
+      hash: md5
+      md5: 92adefa9fcb0870374066a0153040221
+      size: 75015
+    - path: .calkit/notebooks/html/notebooks/plot-spec.html
+      hash: md5
+      md5: 533a66b65d0bd4cbf83a1f5d925a5010
+      size: 348491
+    - path: paper/figures/raw-data-spectra.png
+      hash: md5
+      md5: 8c9521ad6e0a8c35d00152651b8b4d39
+      size: 191768
+  main:
+    cmd: calkit latex build -e latex --no-check paper/main.tex
+    deps:
+    - path: .calkit/env-locks/latex
+      hash: md5
+      md5: daaa7f3a1c690b98b8484b196096bd9c.dir
+      size: 1147
+      nfiles: 1
+    - path: paper/figures/processed_derivative.png
+      hash: md5
+      md5: dd1f3f2107b5f9e22741f9843732fd73
+      size: 270832
+    - path: paper/figures/processed_smooth.png
+      hash: md5
+      md5: f2a417095af7441341ab3b4cb1e5e6b9
+      size: 260785
+    - path: paper/figures/processed_timeseries.png
+      hash: md5
+      md5: 72543c9e87386997a814b9c06618974e
+      size: 466706
+    - path: paper/figures/raw-data-spectra.png
+      hash: md5
+      md5: 8c9521ad6e0a8c35d00152651b8b4d39
+      size: 191768
+    - path: paper/figures/raw_correlation.png
+      hash: md5
+      md5: 6361b3053d56e47327253a707606c5f6
+      size: 22849
+    - path: paper/figures/raw_distributions.png
+      hash: md5
+      md5: ab0477b4628ba461d7c8835ef957ddae
+      size: 106820
+    - path: paper/figures/raw_scatter3d.png
+      hash: md5
+      md5: 58e62eb14b3039c70a124a51ee3a9dae
+      size: 51195
+    - path: paper/figures/raw_spectrogram.png
+      hash: md5
+      md5: 0e34015957000d19c0356dfccae34884
+      size: 36871
+    - path: paper/figures/raw_timeseries.png
+      hash: md5
+      md5: ecc74feb1fe59f871f77406db1db336f
+      size: 323692
+    - path: paper/main.tex
+      hash: md5
+      md5: c8866cf0595e512cb1a0ff9e75af505a
+      size: 4574
+    - path: paper/references.bib
+      hash: md5
+      md5: 2e34cc5029dfe127b9ebff51205e4978
+      size: 1213
+    outs:
+    - path: paper/main.pdf
+      hash: md5
+      md5: 03038692b6cf1587285a1de7c6e77534
+      size: 1408422
