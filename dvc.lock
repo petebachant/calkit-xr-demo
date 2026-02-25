@@ -77,7 +77,7 @@ stages:
       md5: 8ac41565c2d50f0b6b222daac46bfc99
       size: 625040
   plot-more:
-    cmd: matlab -batch "run('scripts/plot_more.m');"
+    cmd: matlab -noFigureWindows -batch "run('scripts/plot_more.m');"
     deps:
     - path: data/raw.csv
       hash: md5
@@ -90,15 +90,15 @@ stages:
     outs:
     - path: paper/figures/raw_correlation.png
       hash: md5
-      md5: 06f6c80c419e26d78c1a160ef53d5e03
-      size: 22456
+      md5: 96521d465e30fa6a0aac58e70afc3eda
+      size: 25750
     - path: paper/figures/raw_scatter3d.png
       hash: md5
-      md5: 04296cf2d6eca363c2c0a4fb7d4da2a7
+      md5: 0d5f897e6f13ca6d4066a2f09f3769eb
       size: 81320
     - path: paper/figures/raw_spectrogram.png
       hash: md5
-      md5: 97529db2e34c4be9fbebc49ce9743e83
+      md5: 1fd43184db258c89c892abd88c72a224
       size: 37929
   main:
     cmd: calkit latex build -e latex --no-check paper/main.tex
@@ -122,19 +122,19 @@ stages:
       size: 713079
     - path: paper/figures/raw_correlation.png
       hash: md5
-      md5: 06f6c80c419e26d78c1a160ef53d5e03
-      size: 22456
+      md5: 96521d465e30fa6a0aac58e70afc3eda
+      size: 25750
     - path: paper/figures/raw_distributions.png
       hash: md5
       md5: 037eb1cc2fc18e2b5651d527540272ea
       size: 108590
     - path: paper/figures/raw_scatter3d.png
       hash: md5
-      md5: 04296cf2d6eca363c2c0a4fb7d4da2a7
+      md5: 0d5f897e6f13ca6d4066a2f09f3769eb
       size: 81320
     - path: paper/figures/raw_spectrogram.png
       hash: md5
-      md5: 97529db2e34c4be9fbebc49ce9743e83
+      md5: 1fd43184db258c89c892abd88c72a224
       size: 37929
     - path: paper/figures/raw_timeseries.png
       hash: md5
@@ -151,5 +151,5 @@ stages:
     outs:
     - path: paper/main.pdf
       hash: md5
-      md5: 2aa2f5b415ab692284cd90c13c2a1c09
-      size: 2085251
+      md5: d7fbf07eda6e56359badabaacc62500c
+      size: 2088544

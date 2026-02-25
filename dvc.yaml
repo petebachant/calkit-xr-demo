@@ -48,7 +48,7 @@ stages:
     desc: Automatically generated from the 'plot' stage in calkit.yaml.
       Changes made here will be overwritten.
   plot-more:
-    cmd: matlab -batch "run('scripts/plot_more.m');"
+    cmd: matlab -noFigureWindows -batch "run('scripts/plot_more.m');"
     deps:
       - scripts/plot_more.m
       - data/raw.csv
