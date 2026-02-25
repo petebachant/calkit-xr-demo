@@ -29,20 +29,20 @@ stages:
       size: 5816
     - path: scripts/process.jl
       hash: md5
-      md5: 0f83d72d96c2c8820126dea7ca4eb46a
-      size: 1633
+      md5: 1810c4521702fb20a55e1cdde58112c1
+      size: 1634
     outs:
     - path: data/processed.csv
       hash: md5
-      md5: 59538bcffb7cf4bdcae134bbd460b615
-      size: 17719
+      md5: 717433d1561acb49cc7db61607a6620e
+      size: 17742
   plot:
     cmd: calkit xenv -n renv1 -- Rscript scripts/plot.R
     deps:
     - path: data/processed.csv
       hash: md5
-      md5: 59538bcffb7cf4bdcae134bbd460b615
-      size: 17719
+      md5: 717433d1561acb49cc7db61607a6620e
+      size: 17742
     - path: data/raw.csv
       hash: md5
       md5: b0927bbde0c8a278b06639193f9a0697
@@ -62,12 +62,12 @@ stages:
       size: 270832
     - path: paper/figures/processed_smooth.png
       hash: md5
-      md5: da63519402da2b834f75eda115bf40e8
-      size: 236019
+      md5: 82723019178c5f15e2e78d3647a1fa5a
+      size: 160701
     - path: paper/figures/processed_timeseries.png
       hash: md5
-      md5: 3a89d4fa7de26eb44f74410a11bd6e8f
-      size: 454464
+      md5: 989393bb8f20bcca9d436183a2e342e8
+      size: 428535
     - path: paper/figures/raw_distributions.png
       hash: md5
       md5: ab0477b4628ba461d7c8835ef957ddae
@@ -142,12 +142,12 @@ stages:
       size: 270832
     - path: paper/figures/processed_smooth.png
       hash: md5
-      md5: da63519402da2b834f75eda115bf40e8
-      size: 236019
+      md5: 82723019178c5f15e2e78d3647a1fa5a
+      size: 160701
     - path: paper/figures/processed_timeseries.png
       hash: md5
-      md5: 3a89d4fa7de26eb44f74410a11bd6e8f
-      size: 454464
+      md5: 989393bb8f20bcca9d436183a2e342e8
+      size: 428535
     - path: paper/figures/raw-data-spectra.png
       hash: md5
       md5: 8c9521ad6e0a8c35d00152651b8b4d39
@@ -183,5 +183,5 @@ stages:
     outs:
     - path: paper/main.pdf
       hash: md5
-      md5: 50839fce30ac2d570eb4c907ec11be07
-      size: 1369595
+      md5: 512632c50a0fcf3f8a7b06719d7b82a5
+      size: 1310433

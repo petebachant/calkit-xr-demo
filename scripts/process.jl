@@ -6,7 +6,7 @@ using Statistics
 
 const INPUT_PATH = "data/raw.csv"
 const OUTPUT_PATH = "data/processed.csv"
-const DEFAULT_WINDOW = 10
+const DEFAULT_WINDOW = 100
 
 function detect_time_column(df::DataFrame)
 	for name in names(df)
