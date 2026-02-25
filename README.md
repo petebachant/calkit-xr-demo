@@ -33,10 +33,11 @@ calkit xr notebooks/plot-spec.ipynb
 calkit xr paper/main.tex
 ```
 
-This automatically recorded a "virtual environment" and pipeline stage for each
-and added them to [`calkit.yaml`](calkit.yaml).
+This automatically recorded a "virtual environment" and
+[pipeline](https://calkit.io/petebachant/calkit-xr-demo/pipeline)
+stage for each and added them to [`calkit.yaml`](calkit.yaml).
 
-The project then became a directed acyclic graph (DAG),
+The project is now a directed acyclic graph (DAG),
 allowing everything to be brought up-to-date with a single command, skipping
 steps that don't need to be rerun by monitoring changes to their environments,
 input data files, and code:
